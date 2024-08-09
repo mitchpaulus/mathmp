@@ -1,6 +1,6 @@
 grammar Mathmp ;
 
-file : (math '\n')* ;
+file : (math '\n'*)* ;
 
 math : expression* ;
 
