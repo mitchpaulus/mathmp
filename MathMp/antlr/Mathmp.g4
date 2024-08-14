@@ -51,5 +51,5 @@ IDENTIFIER : [a-zA-Z]+ ;
 
 PERIOD : '.' ;
 
-NUMBER : [0-9]+('.' [0-9]+) ;
+NUMBER : [0-9]+('.' [0-9]+)? ;
 WS : [ \t\r\n]+ -> skip ;
