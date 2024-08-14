@@ -112,6 +112,17 @@ public enum MathMlStyle
     Tex,
 }
 
+public class Greek
+{
+    public static Dictionary<string, string> Map = new()
+    {
+        { "del", "\u2202" },
+        { "delta", "δ" },
+        { "Delta", "Δ" }
+    };
+
+}
+
 public class MathMpVisitor : MathmpBaseVisitor<string>
 {
     private readonly MathMlStyle _style;
@@ -138,6 +149,11 @@ public class MathMpVisitor : MathmpBaseVisitor<string>
         return $"<msub>{Visit(context.expression(0))}{Visit(context.expression(1))}</msub>";
     }
 
+    public override string VisitSuperscriptExp(MathmpParser.SuperscriptExpContext context)
+    {
+        return $"<msup>{Visit(context.expression(0))}{Visit(context.expression(1))}</msup>";
+    }
+
     public override string VisitDotExp(MathmpParser.DotExpContext context) => $"<mover accent=\"true\">{Visit(context.expression())}<mo>.</mo></mover>";
 
     public override string VisitIdentifierExp(MathmpParser.IdentifierExpContext context) => $"<mo>{context.GetText()}</mo>";
@@ -153,11 +169,24 @@ public class MathMpVisitor : MathmpBaseVisitor<string>
     public override string VisitParenExp(MathmpParser.ParenExpContext context)
     {
         return _style == MathMlStyle.Word
-            ? $"<mfenced><mrow>{string.Join(",", context.expression().Select(Visit))}</mrow></mfenced>"
-            : $"<mo>(</mo>{string.Join(",", context.expression().Select(Visit))}<mo>)</mo>";
+            ? $"<mfenced><mrow>{string.Join("", context.expression().Select(Visit))}</mrow></mfenced>"
+            : $"<mo>(</mo>{string.Join("", context.expression().Select(Visit))}<mo>)</mo>";
+    }
+
+    public override string VisitSquareExp(MathmpParser.SquareExpContext context)
+    {
+        return _style == MathMlStyle.Word
+            ? $"<mfenced open=\"[\" close=\"]\"><mrow>{string.Join("", context.expression().Select(Visit))}</mrow></mfenced>"
+            : $"<mo>[</mo>{string.Join("", context.expression().Select(Visit))}<mo>]</mo>";
     }
 
     public override string VisitNumberExp(MathmpParser.NumberExpContext context) => $"<mn>{context.GetText()}</mn>";
+
+    public override string VisitGreekExp(MathmpParser.GreekExpContext context)
+    {
+        List<string> replacements = context.greek().GREEK().Select(g => Greek.Map.GetValueOrDefault(g.GetText(), "Not Implemented")).ToList();
+        return $"<mo>{string.Join("", replacements)}</mo>";
+    }
 }
 
 public class TexVisitor : MathmpBaseVisitor<string>

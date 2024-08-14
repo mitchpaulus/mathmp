@@ -135,6 +135,18 @@ public interface IMathmpListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitSqrtExp([NotNull] MathmpParser.SqrtExpContext context);
 	/// <summary>
+	/// Enter a parse tree produced by the <c>SquareExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSquareExp([NotNull] MathmpParser.SquareExpContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>SquareExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSquareExp([NotNull] MathmpParser.SquareExpContext context);
+	/// <summary>
 	/// Enter a parse tree produced by the <c>GreekExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// </summary>

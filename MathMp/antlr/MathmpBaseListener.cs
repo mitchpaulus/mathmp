@@ -158,6 +158,20 @@ public partial class MathmpBaseListener : IMathmpListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitSqrtExp([NotNull] MathmpParser.SqrtExpContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by the <c>SquareExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSquareExp([NotNull] MathmpParser.SquareExpContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by the <c>SquareExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSquareExp([NotNull] MathmpParser.SquareExpContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by the <c>GreekExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// <para>The default implementation does nothing.</para>

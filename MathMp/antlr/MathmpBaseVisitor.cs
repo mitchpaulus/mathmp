@@ -132,6 +132,17 @@ public partial class MathmpBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// <return>The visitor result.</return>
 	public virtual Result VisitSqrtExp([NotNull] MathmpParser.SqrtExpContext context) { return VisitChildren(context); }
 	/// <summary>
+	/// Visit a parse tree produced by the <c>SquareExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitSquareExp([NotNull] MathmpParser.SquareExpContext context) { return VisitChildren(context); }
+	/// <summary>
 	/// Visit a parse tree produced by the <c>GreekExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// <para>
