@@ -135,6 +135,18 @@ public interface IMathmpListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitSqrtExp([NotNull] MathmpParser.SqrtExpContext context);
 	/// <summary>
+	/// Enter a parse tree produced by the <c>GreekExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterGreekExp([NotNull] MathmpParser.GreekExpContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>GreekExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitGreekExp([NotNull] MathmpParser.GreekExpContext context);
+	/// <summary>
 	/// Enter a parse tree produced by the <c>DivExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// </summary>
@@ -200,4 +212,14 @@ public interface IMathmpListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitNumber([NotNull] MathmpParser.NumberContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="MathmpParser.greek"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterGreek([NotNull] MathmpParser.GreekContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MathmpParser.greek"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitGreek([NotNull] MathmpParser.GreekContext context);
 }

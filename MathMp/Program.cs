@@ -49,11 +49,29 @@ class Program
 
         var stream = Console.IsInputRedirected ? new AntlrInputStream(Console.In) : new AntlrFileStream(filepath);
 
+        ErrorListener errorListener = new();
+
         MathmpLexer lex = new MathmpLexer(stream);
+        lex.RemoveErrorListeners();
+        lex.AddErrorListener(errorListener);
+
         CommonTokenStream tokenStream = new CommonTokenStream(lex);
         MathmpParser parser = new MathmpParser(tokenStream);
+        parser.RemoveErrorListeners();
+        parser.AddErrorListener(errorListener);
 
         var tree = parser.file();
+
+        if (errorListener.Messages.Any())
+        {
+            foreach (var errorMessage in errorListener.Messages)
+            {
+                Console.Error.Write(errorMessage);
+                if (!errorMessage.EndsWith('\n')) Console.Error.Write('\n');
+            }
+
+            return 1;
+        }
 
         MathmpBaseVisitor<string> visitor;
         if (style == MathMlStyle.Tex)
@@ -135,9 +153,11 @@ public class MathMpVisitor : MathmpBaseVisitor<string>
     public override string VisitParenExp(MathmpParser.ParenExpContext context)
     {
         return _style == MathMlStyle.Word
-            ? $"<mfenced><mrow>{Visit(context.expression())}</mrow></mfenced>"
-            : $"<mo>(</mo>{Visit(context.expression())}<mo>)</mo>";
+            ? $"<mfenced><mrow>{string.Join(",", context.expression().Select(Visit))}</mrow></mfenced>"
+            : $"<mo>(</mo>{string.Join(",", context.expression().Select(Visit))}<mo>)</mo>";
     }
+
+    public override string VisitNumberExp(MathmpParser.NumberExpContext context) => $"<mn>{context.GetText()}</mn>";
 }
 
 public class TexVisitor : MathmpBaseVisitor<string>
@@ -174,6 +194,23 @@ public class TexVisitor : MathmpBaseVisitor<string>
 
     public override string VisitParenExp(MathmpParser.ParenExpContext context)
     {
-        return $"\\left({Visit(context.expression())}\\right)";
+        return $"\\left({context.expression().Select(Visit)}\\right)";
+    }
+
+    public override string VisitNumberExp(MathmpParser.NumberExpContext context) => context.GetText();
+}
+
+public class ErrorListener : IAntlrErrorListener<IToken>, IAntlrErrorListener<int>
+{
+    public readonly List<string>  Messages = new();
+
+    public void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+    {
+        Messages.Add(msg);
+    }
+
+    public void SyntaxError(TextWriter output, IRecognizer recognizer, int offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+    {
+        Messages.Add(msg);
     }
 }

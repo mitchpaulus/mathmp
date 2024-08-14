@@ -93,6 +93,13 @@ public interface IMathmpVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitSqrtExp([NotNull] MathmpParser.SqrtExpContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>GreekExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitGreekExp([NotNull] MathmpParser.GreekExpContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>DivExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// </summary>
@@ -131,4 +138,10 @@ public interface IMathmpVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitNumber([NotNull] MathmpParser.NumberContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MathmpParser.greek"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitGreek([NotNull] MathmpParser.GreekContext context);
 }

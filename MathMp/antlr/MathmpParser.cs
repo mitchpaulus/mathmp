@@ -36,22 +36,24 @@ public partial class MathmpParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		T__0=1, CARET=2, LPAREN=3, RPAREN=4, LBRACE=5, RBRACE=6, OPERATOR=7, FORWARDSLASH=8, 
-		DOT=9, SQRT=10, IDENTIFIER=11, PERIOD=12, NUMBER=13, WS=14;
+		T__0=1, GREEK=2, CARET=3, LPAREN=4, RPAREN=5, LBRACE=6, RBRACE=7, OPERATOR=8, 
+		FORWARDSLASH=9, DOT=10, SQRT=11, IDENTIFIER=12, PERIOD=13, NUMBER=14, 
+		WS=15;
 	public const int
 		RULE_file = 0, RULE_math = 1, RULE_expression = 2, RULE_operator = 3, 
-		RULE_identifier = 4, RULE_number = 5;
+		RULE_identifier = 4, RULE_number = 5, RULE_greek = 6;
 	public static readonly string[] ruleNames = {
-		"file", "math", "expression", "operator", "identifier", "number"
+		"file", "math", "expression", "operator", "identifier", "number", "greek"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "'\\n'", "'^'", "'('", "')'", "'{'", "'}'", null, "'/'", "'dot'", 
+		null, "'\\n'", null, "'^'", "'('", "')'", "'{'", "'}'", null, "'/'", "'dot'", 
 		"'sqrt'", null, "'.'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, null, "CARET", "LPAREN", "RPAREN", "LBRACE", "RBRACE", "OPERATOR", 
-		"FORWARDSLASH", "DOT", "SQRT", "IDENTIFIER", "PERIOD", "NUMBER", "WS"
+		null, null, "GREEK", "CARET", "LPAREN", "RPAREN", "LBRACE", "RBRACE", 
+		"OPERATOR", "FORWARDSLASH", "DOT", "SQRT", "IDENTIFIER", "PERIOD", "NUMBER", 
+		"WS"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -121,21 +123,40 @@ public partial class MathmpParser : Parser {
 		EnterRule(_localctx, 0, RULE_file);
 		int _la;
 		try {
+			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 17;
+			State = 22;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 11946L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 23894L) != 0)) {
 				{
 				{
-				State = 12;
+				State = 14;
 				math();
-				State = 13;
-				Match(T__0);
+				State = 16;
+				ErrorHandler.Sync(this);
+				_alt = 1;
+				do {
+					switch (_alt) {
+					case 1:
+						{
+						{
+						State = 15;
+						Match(T__0);
+						}
+						}
+						break;
+					default:
+						throw new NoViableAltException(this);
+					}
+					State = 18;
+					ErrorHandler.Sync(this);
+					_alt = Interpreter.AdaptivePredict(TokenStream,0,Context);
+				} while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER );
 				}
 				}
-				State = 19;
+				State = 24;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -190,17 +211,17 @@ public partial class MathmpParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 23;
+			State = 28;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 11944L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 23892L) != 0)) {
 				{
 				{
-				State = 20;
+				State = 25;
 				expression(0);
 				}
 				}
-				State = 25;
+				State = 30;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -327,10 +348,13 @@ public partial class MathmpParser : Parser {
 	}
 	public partial class ParenExpContext : ExpressionContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LPAREN() { return GetToken(MathmpParser.LPAREN, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
-			return GetRuleContext<ExpressionContext>(0);
-		}
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode RPAREN() { return GetToken(MathmpParser.RPAREN, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
+			return GetRuleContexts<ExpressionContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression(int i) {
+			return GetRuleContext<ExpressionContext>(i);
+		}
 		public ParenExpContext(ExpressionContext context) { CopyFrom(context); }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void EnterRule(IParseTreeListener listener) {
@@ -396,6 +420,28 @@ public partial class MathmpParser : Parser {
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IMathmpVisitor<TResult> typedVisitor = visitor as IMathmpVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitSqrtExp(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+	public partial class GreekExpContext : ExpressionContext {
+		[System.Diagnostics.DebuggerNonUserCode] public GreekContext greek() {
+			return GetRuleContext<GreekContext>(0);
+		}
+		public GreekExpContext(ExpressionContext context) { CopyFrom(context); }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IMathmpListener typedListener = listener as IMathmpListener;
+			if (typedListener != null) typedListener.EnterGreekExp(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IMathmpListener typedListener = listener as IMathmpListener;
+			if (typedListener != null) typedListener.ExitGreekExp(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMathmpVisitor<TResult> typedVisitor = visitor as IMathmpVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitGreekExp(this);
 			else return visitor.VisitChildren(this);
 		}
 	}
@@ -488,7 +534,7 @@ public partial class MathmpParser : Parser {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 46;
+			State = 56;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case LBRACE:
@@ -497,23 +543,23 @@ public partial class MathmpParser : Parser {
 				Context = _localctx;
 				_prevctx = _localctx;
 
-				State = 27;
+				State = 32;
 				Match(LBRACE);
-				State = 31;
+				State = 36;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
-				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 11944L) != 0)) {
+				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 23892L) != 0)) {
 					{
 					{
-					State = 28;
+					State = 33;
 					expression(0);
 					}
 					}
-					State = 33;
+					State = 38;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
 				}
-				State = 34;
+				State = 39;
 				Match(RBRACE);
 				}
 				break;
@@ -522,11 +568,23 @@ public partial class MathmpParser : Parser {
 				_localctx = new ParenExpContext(_localctx);
 				Context = _localctx;
 				_prevctx = _localctx;
-				State = 35;
+				State = 40;
 				Match(LPAREN);
-				State = 36;
-				expression(0);
-				State = 37;
+				State = 44;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 23892L) != 0)) {
+					{
+					{
+					State = 41;
+					expression(0);
+					}
+					}
+					State = 46;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+				}
+				State = 47;
 				Match(RPAREN);
 				}
 				break;
@@ -535,10 +593,10 @@ public partial class MathmpParser : Parser {
 				_localctx = new DotExpContext(_localctx);
 				Context = _localctx;
 				_prevctx = _localctx;
-				State = 39;
+				State = 48;
 				Match(DOT);
-				State = 40;
-				expression(8);
+				State = 49;
+				expression(9);
 				}
 				break;
 			case SQRT:
@@ -546,10 +604,10 @@ public partial class MathmpParser : Parser {
 				_localctx = new SqrtExpContext(_localctx);
 				Context = _localctx;
 				_prevctx = _localctx;
-				State = 41;
+				State = 50;
 				Match(SQRT);
-				State = 42;
-				expression(4);
+				State = 51;
+				expression(5);
 				}
 				break;
 			case OPERATOR:
@@ -557,7 +615,7 @@ public partial class MathmpParser : Parser {
 				_localctx = new OperatorExpContext(_localctx);
 				Context = _localctx;
 				_prevctx = _localctx;
-				State = 43;
+				State = 52;
 				@operator();
 				}
 				break;
@@ -566,7 +624,7 @@ public partial class MathmpParser : Parser {
 				_localctx = new IdentifierExpContext(_localctx);
 				Context = _localctx;
 				_prevctx = _localctx;
-				State = 44;
+				State = 53;
 				identifier();
 				}
 				break;
@@ -575,68 +633,77 @@ public partial class MathmpParser : Parser {
 				_localctx = new NumberExpContext(_localctx);
 				Context = _localctx;
 				_prevctx = _localctx;
-				State = 45;
+				State = 54;
 				number();
+				}
+				break;
+			case GREEK:
+				{
+				_localctx = new GreekExpContext(_localctx);
+				Context = _localctx;
+				_prevctx = _localctx;
+				State = 55;
+				greek();
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 59;
+			State = 69;
 			ErrorHandler.Sync(this);
-			_alt = Interpreter.AdaptivePredict(TokenStream,5,Context);
+			_alt = Interpreter.AdaptivePredict(TokenStream,7,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( ParseListeners!=null )
 						TriggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					State = 57;
+					State = 67;
 					ErrorHandler.Sync(this);
-					switch ( Interpreter.AdaptivePredict(TokenStream,4,Context) ) {
+					switch ( Interpreter.AdaptivePredict(TokenStream,6,Context) ) {
 					case 1:
 						{
 						_localctx = new SubscriptExpContext(new ExpressionContext(_parentctx, _parentState));
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 48;
-						if (!(Precpred(Context, 7))) throw new FailedPredicateException(this, "Precpred(Context, 7)");
-						State = 49;
+						State = 58;
+						if (!(Precpred(Context, 8))) throw new FailedPredicateException(this, "Precpred(Context, 8)");
+						State = 59;
 						Match(PERIOD);
-						State = 50;
-						expression(8);
+						State = 60;
+						expression(9);
 						}
 						break;
 					case 2:
 						{
 						_localctx = new SuperscriptExpContext(new ExpressionContext(_parentctx, _parentState));
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 51;
-						if (!(Precpred(Context, 6))) throw new FailedPredicateException(this, "Precpred(Context, 6)");
-						State = 52;
+						State = 61;
+						if (!(Precpred(Context, 7))) throw new FailedPredicateException(this, "Precpred(Context, 7)");
+						State = 62;
 						Match(CARET);
-						State = 53;
-						expression(7);
+						State = 63;
+						expression(8);
 						}
 						break;
 					case 3:
 						{
 						_localctx = new DivExpContext(new ExpressionContext(_parentctx, _parentState));
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 54;
-						if (!(Precpred(Context, 5))) throw new FailedPredicateException(this, "Precpred(Context, 5)");
-						State = 55;
+						State = 64;
+						if (!(Precpred(Context, 6))) throw new FailedPredicateException(this, "Precpred(Context, 6)");
+						State = 65;
 						Match(FORWARDSLASH);
-						State = 56;
-						expression(6);
+						State = 66;
+						expression(7);
 						}
 						break;
 					}
 					} 
 				}
-				State = 61;
+				State = 71;
 				ErrorHandler.Sync(this);
-				_alt = Interpreter.AdaptivePredict(TokenStream,5,Context);
+				_alt = Interpreter.AdaptivePredict(TokenStream,7,Context);
 			}
 			}
 		}
@@ -652,7 +719,10 @@ public partial class MathmpParser : Parser {
 	}
 
 	public partial class OperatorContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode OPERATOR() { return GetToken(MathmpParser.OPERATOR, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] OPERATOR() { return GetTokens(MathmpParser.OPERATOR); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode OPERATOR(int i) {
+			return GetToken(MathmpParser.OPERATOR, i);
+		}
 		public OperatorContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -681,10 +751,29 @@ public partial class MathmpParser : Parser {
 		OperatorContext _localctx = new OperatorContext(Context, State);
 		EnterRule(_localctx, 6, RULE_operator);
 		try {
+			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 62;
-			Match(OPERATOR);
+			State = 73;
+			ErrorHandler.Sync(this);
+			_alt = 1;
+			do {
+				switch (_alt) {
+				case 1:
+					{
+					{
+					State = 72;
+					Match(OPERATOR);
+					}
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
+				}
+				State = 75;
+				ErrorHandler.Sync(this);
+				_alt = Interpreter.AdaptivePredict(TokenStream,8,Context);
+			} while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER );
 			}
 		}
 		catch (RecognitionException re) {
@@ -730,7 +819,7 @@ public partial class MathmpParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 64;
+			State = 77;
 			Match(IDENTIFIER);
 			}
 		}
@@ -777,8 +866,77 @@ public partial class MathmpParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 66;
+			State = 79;
 			Match(NUMBER);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class GreekContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] GREEK() { return GetTokens(MathmpParser.GREEK); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode GREEK(int i) {
+			return GetToken(MathmpParser.GREEK, i);
+		}
+		public GreekContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_greek; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IMathmpListener typedListener = listener as IMathmpListener;
+			if (typedListener != null) typedListener.EnterGreek(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IMathmpListener typedListener = listener as IMathmpListener;
+			if (typedListener != null) typedListener.ExitGreek(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMathmpVisitor<TResult> typedVisitor = visitor as IMathmpVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitGreek(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public GreekContext greek() {
+		GreekContext _localctx = new GreekContext(Context, State);
+		EnterRule(_localctx, 12, RULE_greek);
+		try {
+			int _alt;
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 82;
+			ErrorHandler.Sync(this);
+			_alt = 1;
+			do {
+				switch (_alt) {
+				case 1:
+					{
+					{
+					State = 81;
+					Match(GREEK);
+					}
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
+				}
+				State = 84;
+				ErrorHandler.Sync(this);
+				_alt = Interpreter.AdaptivePredict(TokenStream,9,Context);
+			} while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER );
 			}
 		}
 		catch (RecognitionException re) {
@@ -800,34 +958,40 @@ public partial class MathmpParser : Parser {
 	}
 	private bool expression_sempred(ExpressionContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 0: return Precpred(Context, 7);
-		case 1: return Precpred(Context, 6);
-		case 2: return Precpred(Context, 5);
+		case 0: return Precpred(Context, 8);
+		case 1: return Precpred(Context, 7);
+		case 2: return Precpred(Context, 6);
 		}
 		return true;
 	}
 
 	private static int[] _serializedATN = {
-		4,1,14,69,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,1,0,1,0,1,0,
-		5,0,16,8,0,10,0,12,0,19,9,0,1,1,5,1,22,8,1,10,1,12,1,25,9,1,1,2,1,2,1,
-		2,5,2,30,8,2,10,2,12,2,33,9,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,
-		1,2,1,2,3,2,47,8,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,5,2,58,8,2,10,2,
-		12,2,61,9,2,1,3,1,3,1,4,1,4,1,5,1,5,1,5,0,1,4,6,0,2,4,6,8,10,0,0,74,0,
-		17,1,0,0,0,2,23,1,0,0,0,4,46,1,0,0,0,6,62,1,0,0,0,8,64,1,0,0,0,10,66,1,
-		0,0,0,12,13,3,2,1,0,13,14,5,1,0,0,14,16,1,0,0,0,15,12,1,0,0,0,16,19,1,
-		0,0,0,17,15,1,0,0,0,17,18,1,0,0,0,18,1,1,0,0,0,19,17,1,0,0,0,20,22,3,4,
-		2,0,21,20,1,0,0,0,22,25,1,0,0,0,23,21,1,0,0,0,23,24,1,0,0,0,24,3,1,0,0,
-		0,25,23,1,0,0,0,26,27,6,2,-1,0,27,31,5,5,0,0,28,30,3,4,2,0,29,28,1,0,0,
-		0,30,33,1,0,0,0,31,29,1,0,0,0,31,32,1,0,0,0,32,34,1,0,0,0,33,31,1,0,0,
-		0,34,47,5,6,0,0,35,36,5,3,0,0,36,37,3,4,2,0,37,38,5,4,0,0,38,47,1,0,0,
-		0,39,40,5,9,0,0,40,47,3,4,2,8,41,42,5,10,0,0,42,47,3,4,2,4,43,47,3,6,3,
-		0,44,47,3,8,4,0,45,47,3,10,5,0,46,26,1,0,0,0,46,35,1,0,0,0,46,39,1,0,0,
-		0,46,41,1,0,0,0,46,43,1,0,0,0,46,44,1,0,0,0,46,45,1,0,0,0,47,59,1,0,0,
-		0,48,49,10,7,0,0,49,50,5,12,0,0,50,58,3,4,2,8,51,52,10,6,0,0,52,53,5,2,
-		0,0,53,58,3,4,2,7,54,55,10,5,0,0,55,56,5,8,0,0,56,58,3,4,2,6,57,48,1,0,
-		0,0,57,51,1,0,0,0,57,54,1,0,0,0,58,61,1,0,0,0,59,57,1,0,0,0,59,60,1,0,
-		0,0,60,5,1,0,0,0,61,59,1,0,0,0,62,63,5,7,0,0,63,7,1,0,0,0,64,65,5,11,0,
-		0,65,9,1,0,0,0,66,67,5,13,0,0,67,11,1,0,0,0,6,17,23,31,46,57,59
+		4,1,15,87,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,1,0,
+		1,0,4,0,17,8,0,11,0,12,0,18,5,0,21,8,0,10,0,12,0,24,9,0,1,1,5,1,27,8,1,
+		10,1,12,1,30,9,1,1,2,1,2,1,2,5,2,35,8,2,10,2,12,2,38,9,2,1,2,1,2,1,2,5,
+		2,43,8,2,10,2,12,2,46,9,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,3,2,57,8,
+		2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,5,2,68,8,2,10,2,12,2,71,9,2,1,3,
+		4,3,74,8,3,11,3,12,3,75,1,4,1,4,1,5,1,5,1,6,4,6,83,8,6,11,6,12,6,84,1,
+		6,0,1,4,7,0,2,4,6,8,10,12,0,0,96,0,22,1,0,0,0,2,28,1,0,0,0,4,56,1,0,0,
+		0,6,73,1,0,0,0,8,77,1,0,0,0,10,79,1,0,0,0,12,82,1,0,0,0,14,16,3,2,1,0,
+		15,17,5,1,0,0,16,15,1,0,0,0,17,18,1,0,0,0,18,16,1,0,0,0,18,19,1,0,0,0,
+		19,21,1,0,0,0,20,14,1,0,0,0,21,24,1,0,0,0,22,20,1,0,0,0,22,23,1,0,0,0,
+		23,1,1,0,0,0,24,22,1,0,0,0,25,27,3,4,2,0,26,25,1,0,0,0,27,30,1,0,0,0,28,
+		26,1,0,0,0,28,29,1,0,0,0,29,3,1,0,0,0,30,28,1,0,0,0,31,32,6,2,-1,0,32,
+		36,5,6,0,0,33,35,3,4,2,0,34,33,1,0,0,0,35,38,1,0,0,0,36,34,1,0,0,0,36,
+		37,1,0,0,0,37,39,1,0,0,0,38,36,1,0,0,0,39,57,5,7,0,0,40,44,5,4,0,0,41,
+		43,3,4,2,0,42,41,1,0,0,0,43,46,1,0,0,0,44,42,1,0,0,0,44,45,1,0,0,0,45,
+		47,1,0,0,0,46,44,1,0,0,0,47,57,5,5,0,0,48,49,5,10,0,0,49,57,3,4,2,9,50,
+		51,5,11,0,0,51,57,3,4,2,5,52,57,3,6,3,0,53,57,3,8,4,0,54,57,3,10,5,0,55,
+		57,3,12,6,0,56,31,1,0,0,0,56,40,1,0,0,0,56,48,1,0,0,0,56,50,1,0,0,0,56,
+		52,1,0,0,0,56,53,1,0,0,0,56,54,1,0,0,0,56,55,1,0,0,0,57,69,1,0,0,0,58,
+		59,10,8,0,0,59,60,5,13,0,0,60,68,3,4,2,9,61,62,10,7,0,0,62,63,5,3,0,0,
+		63,68,3,4,2,8,64,65,10,6,0,0,65,66,5,9,0,0,66,68,3,4,2,7,67,58,1,0,0,0,
+		67,61,1,0,0,0,67,64,1,0,0,0,68,71,1,0,0,0,69,67,1,0,0,0,69,70,1,0,0,0,
+		70,5,1,0,0,0,71,69,1,0,0,0,72,74,5,8,0,0,73,72,1,0,0,0,74,75,1,0,0,0,75,
+		73,1,0,0,0,75,76,1,0,0,0,76,7,1,0,0,0,77,78,5,12,0,0,78,9,1,0,0,0,79,80,
+		5,14,0,0,80,11,1,0,0,0,81,83,5,2,0,0,82,81,1,0,0,0,83,84,1,0,0,0,84,82,
+		1,0,0,0,84,85,1,0,0,0,85,13,1,0,0,0,10,18,22,28,36,44,56,67,69,75,84
 	};
 
 	public static readonly ATN _ATN =

@@ -158,6 +158,20 @@ public partial class MathmpBaseListener : IMathmpListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitSqrtExp([NotNull] MathmpParser.SqrtExpContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by the <c>GreekExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterGreekExp([NotNull] MathmpParser.GreekExpContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by the <c>GreekExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitGreekExp([NotNull] MathmpParser.GreekExpContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by the <c>DivExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -235,6 +249,18 @@ public partial class MathmpBaseListener : IMathmpListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitNumber([NotNull] MathmpParser.NumberContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="MathmpParser.greek"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterGreek([NotNull] MathmpParser.GreekContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MathmpParser.greek"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitGreek([NotNull] MathmpParser.GreekContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>
