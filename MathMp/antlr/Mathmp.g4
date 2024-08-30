@@ -9,11 +9,13 @@ expression
     | LPAREN expression* RPAREN # ParenExp
     | LSQUARE expression* RSQUARE # SquareExp
     | DOT expression # DotExp
+    | expression SQUARED # SquaredExp
     | expression PERIOD expression # SubscriptExp
     | expression CARET expression # SuperscriptExp
     | expression FORWARDSLASH expression # DivExp
     | SQRT expression # SqrtExp
     | operator # OperatorExp
+    | abbrev # AbbrevExp
     | identifier # IdentifierExp
     | number # NumberExp
     | greek # GreekExp
@@ -31,8 +33,15 @@ GREEK : 'del'
       | 'gamma'
       | 'delta'
       | 'Delta'
+      | 'rho'
       ;
 
+APPROX : 'approx' ;
+CDOT : 'cdot' ;
+
+abbrev : APPROX | CDOT ;
+
+SQUARED : '²' ;
 
 CARET : '^' ;
 LPAREN : '(' ;
@@ -41,7 +50,7 @@ LSQUARE : '[' ;
 RSQUARE : ']' ;
 LBRACE : '{' ;
 RBRACE : '}' ;
-OPERATOR : '+' | '-' | '=' | '∂' | 'Δ' ;
+OPERATOR : '+' | '-' | '=' | '∂' | 'Δ' | '°' | ',' | '≈' ;
 FORWARDSLASH : '/' ;
 
 DOT : 'dot' ;

@@ -65,26 +65,12 @@ public interface IMathmpVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitOperatorExp([NotNull] MathmpParser.OperatorExpContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>SubscriptExp</c>
+	/// Visit a parse tree produced by the <c>SquaredExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitSubscriptExp([NotNull] MathmpParser.SubscriptExpContext context);
-	/// <summary>
-	/// Visit a parse tree produced by the <c>ParenExp</c>
-	/// labeled alternative in <see cref="MathmpParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitParenExp([NotNull] MathmpParser.ParenExpContext context);
-	/// <summary>
-	/// Visit a parse tree produced by the <c>BracedExp</c>
-	/// labeled alternative in <see cref="MathmpParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitBracedExp([NotNull] MathmpParser.BracedExpContext context);
+	Result VisitSquaredExp([NotNull] MathmpParser.SquaredExpContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>SqrtExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
@@ -114,6 +100,34 @@ public interface IMathmpVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitDivExp([NotNull] MathmpParser.DivExpContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>DotExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitDotExp([NotNull] MathmpParser.DotExpContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>SubscriptExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSubscriptExp([NotNull] MathmpParser.SubscriptExpContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>ParenExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitParenExp([NotNull] MathmpParser.ParenExpContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>BracedExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitBracedExp([NotNull] MathmpParser.BracedExpContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>NumberExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// </summary>
@@ -121,12 +135,12 @@ public interface IMathmpVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitNumberExp([NotNull] MathmpParser.NumberExpContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>DotExp</c>
+	/// Visit a parse tree produced by the <c>AbbrevExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitDotExp([NotNull] MathmpParser.DotExpContext context);
+	Result VisitAbbrevExp([NotNull] MathmpParser.AbbrevExpContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="MathmpParser.operator"/>.
 	/// </summary>
@@ -151,4 +165,10 @@ public interface IMathmpVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitGreek([NotNull] MathmpParser.GreekContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MathmpParser.abbrev"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitAbbrev([NotNull] MathmpParser.AbbrevContext context);
 }

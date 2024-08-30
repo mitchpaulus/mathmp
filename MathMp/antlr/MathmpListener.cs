@@ -87,41 +87,17 @@ public interface IMathmpListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitOperatorExp([NotNull] MathmpParser.OperatorExpContext context);
 	/// <summary>
-	/// Enter a parse tree produced by the <c>SubscriptExp</c>
+	/// Enter a parse tree produced by the <c>SquaredExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterSubscriptExp([NotNull] MathmpParser.SubscriptExpContext context);
+	void EnterSquaredExp([NotNull] MathmpParser.SquaredExpContext context);
 	/// <summary>
-	/// Exit a parse tree produced by the <c>SubscriptExp</c>
+	/// Exit a parse tree produced by the <c>SquaredExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitSubscriptExp([NotNull] MathmpParser.SubscriptExpContext context);
-	/// <summary>
-	/// Enter a parse tree produced by the <c>ParenExp</c>
-	/// labeled alternative in <see cref="MathmpParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterParenExp([NotNull] MathmpParser.ParenExpContext context);
-	/// <summary>
-	/// Exit a parse tree produced by the <c>ParenExp</c>
-	/// labeled alternative in <see cref="MathmpParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitParenExp([NotNull] MathmpParser.ParenExpContext context);
-	/// <summary>
-	/// Enter a parse tree produced by the <c>BracedExp</c>
-	/// labeled alternative in <see cref="MathmpParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterBracedExp([NotNull] MathmpParser.BracedExpContext context);
-	/// <summary>
-	/// Exit a parse tree produced by the <c>BracedExp</c>
-	/// labeled alternative in <see cref="MathmpParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitBracedExp([NotNull] MathmpParser.BracedExpContext context);
+	void ExitSquaredExp([NotNull] MathmpParser.SquaredExpContext context);
 	/// <summary>
 	/// Enter a parse tree produced by the <c>SqrtExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
@@ -171,6 +147,54 @@ public interface IMathmpListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitDivExp([NotNull] MathmpParser.DivExpContext context);
 	/// <summary>
+	/// Enter a parse tree produced by the <c>DotExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterDotExp([NotNull] MathmpParser.DotExpContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>DotExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitDotExp([NotNull] MathmpParser.DotExpContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>SubscriptExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSubscriptExp([NotNull] MathmpParser.SubscriptExpContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>SubscriptExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSubscriptExp([NotNull] MathmpParser.SubscriptExpContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>ParenExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterParenExp([NotNull] MathmpParser.ParenExpContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>ParenExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitParenExp([NotNull] MathmpParser.ParenExpContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>BracedExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterBracedExp([NotNull] MathmpParser.BracedExpContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>BracedExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitBracedExp([NotNull] MathmpParser.BracedExpContext context);
+	/// <summary>
 	/// Enter a parse tree produced by the <c>NumberExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// </summary>
@@ -183,17 +207,17 @@ public interface IMathmpListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitNumberExp([NotNull] MathmpParser.NumberExpContext context);
 	/// <summary>
-	/// Enter a parse tree produced by the <c>DotExp</c>
+	/// Enter a parse tree produced by the <c>AbbrevExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterDotExp([NotNull] MathmpParser.DotExpContext context);
+	void EnterAbbrevExp([NotNull] MathmpParser.AbbrevExpContext context);
 	/// <summary>
-	/// Exit a parse tree produced by the <c>DotExp</c>
+	/// Exit a parse tree produced by the <c>AbbrevExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitDotExp([NotNull] MathmpParser.DotExpContext context);
+	void ExitAbbrevExp([NotNull] MathmpParser.AbbrevExpContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="MathmpParser.operator"/>.
 	/// </summary>
@@ -234,4 +258,14 @@ public interface IMathmpListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitGreek([NotNull] MathmpParser.GreekContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="MathmpParser.abbrev"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterAbbrev([NotNull] MathmpParser.AbbrevContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MathmpParser.abbrev"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitAbbrev([NotNull] MathmpParser.AbbrevContext context);
 }

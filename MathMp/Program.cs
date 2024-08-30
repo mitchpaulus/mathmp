@@ -118,9 +118,18 @@ public class Greek
     {
         { "del", "\u2202" },
         { "delta", "δ" },
-        { "Delta", "Δ" }
+        { "Delta", "Δ" },
+        { "rho", "ρ"},
     };
+}
 
+public class Abbrevs
+{
+    public static Dictionary<string, string> Map = new()
+    {
+        { "approx", "\u2248" },
+        { "cdot", "\u00B7" },
+    };
 }
 
 public class MathMpVisitor : MathmpBaseVisitor<string>
@@ -186,6 +195,21 @@ public class MathMpVisitor : MathmpBaseVisitor<string>
     {
         List<string> replacements = context.greek().GREEK().Select(g => Greek.Map.GetValueOrDefault(g.GetText(), "Not Implemented")).ToList();
         return $"<mo>{string.Join("", replacements)}</mo>";
+    }
+
+    public override string VisitSqrtExp(MathmpParser.SqrtExpContext context)
+    {
+        return $"<msqrt>{Visit(context.expression())}</msqrt>";
+    }
+
+    public override string VisitSquaredExp(MathmpParser.SquaredExpContext context)
+    {
+        return $"<msup>{Visit(context.expression())}<mn>2</mn></msup>";
+    }
+
+    public override string VisitAbbrevExp(MathmpParser.AbbrevExpContext context)
+    {
+        return $"<mo>{Abbrevs.Map[context.GetText()]}</mo>";
     }
 }
 
