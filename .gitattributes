@@ -1,0 +1,5 @@
+*.g4 text eol=lf
+*.sh text eol=lf
+*.txt text eol=lf
+compile_grammer text eol=lf
+compile_java text eol=lf

@@ -165,7 +165,7 @@ public class MathMpVisitor : MathmpBaseVisitor<string>
 
     public override string VisitDotExp(MathmpParser.DotExpContext context) => $"<mover accent=\"true\">{Visit(context.expression())}<mo>.</mo></mover>";
 
-    public override string VisitIdentifierExp(MathmpParser.IdentifierExpContext context) => $"<mo>{context.GetText()}</mo>";
+    public override string VisitIdentifierExp(MathmpParser.IdentifierExpContext context) => $"<mi>{context.GetText()}</mi>";
 
     public override string VisitDivExp(MathmpParser.DivExpContext context)
     {
