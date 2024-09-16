@@ -16,6 +16,8 @@ expression
     | SQRT expression # SqrtExp
     | operator # OperatorExp
     | abbrev # AbbrevExp
+    | SINGLE_QUOTE_STR # SingleQuoteStrExp
+    | STRING # StringExp
     | identifier # IdentifierExp
     | number # NumberExp
     | greek # GreekExp
@@ -52,6 +54,12 @@ LBRACE : '{' ;
 RBRACE : '}' ;
 OPERATOR : '+' | '-' | '=' | '∂' | 'Δ' | '°' | ',' | '≈' ;
 FORWARDSLASH : '/' ;
+
+// See pg. 78 of Definitive ANTLR Reference.
+STRING : '"' (ESC|.)*? '"' ;
+fragment ESC : '\\"'  | '\\\\' ;
+
+SINGLE_QUOTE_STR : '\'' [a-zA-Z] + ;
 
 DOT : 'dot' ;
 SQRT : 'sqrt' ;

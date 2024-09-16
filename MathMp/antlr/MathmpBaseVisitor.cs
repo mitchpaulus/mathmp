@@ -88,6 +88,17 @@ public partial class MathmpBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// <return>The visitor result.</return>
 	public virtual Result VisitOperatorExp([NotNull] MathmpParser.OperatorExpContext context) { return VisitChildren(context); }
 	/// <summary>
+	/// Visit a parse tree produced by the <c>StringExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitStringExp([NotNull] MathmpParser.StringExpContext context) { return VisitChildren(context); }
+	/// <summary>
 	/// Visit a parse tree produced by the <c>SquaredExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// <para>
@@ -186,6 +197,17 @@ public partial class MathmpBaseVisitor<Result> : AbstractParseTreeVisitor<Result
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	public virtual Result VisitBracedExp([NotNull] MathmpParser.BracedExpContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>SingleQuoteStrExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitSingleQuoteStrExp([NotNull] MathmpParser.SingleQuoteStrExpContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by the <c>NumberExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.

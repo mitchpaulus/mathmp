@@ -87,6 +87,18 @@ public interface IMathmpListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitOperatorExp([NotNull] MathmpParser.OperatorExpContext context);
 	/// <summary>
+	/// Enter a parse tree produced by the <c>StringExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterStringExp([NotNull] MathmpParser.StringExpContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>StringExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitStringExp([NotNull] MathmpParser.StringExpContext context);
+	/// <summary>
 	/// Enter a parse tree produced by the <c>SquaredExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// </summary>
@@ -194,6 +206,18 @@ public interface IMathmpListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitBracedExp([NotNull] MathmpParser.BracedExpContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>SingleQuoteStrExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSingleQuoteStrExp([NotNull] MathmpParser.SingleQuoteStrExpContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>SingleQuoteStrExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSingleQuoteStrExp([NotNull] MathmpParser.SingleQuoteStrExpContext context);
 	/// <summary>
 	/// Enter a parse tree produced by the <c>NumberExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.

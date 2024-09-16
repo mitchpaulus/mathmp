@@ -102,6 +102,20 @@ public partial class MathmpBaseListener : IMathmpListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitOperatorExp([NotNull] MathmpParser.OperatorExpContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by the <c>StringExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterStringExp([NotNull] MathmpParser.StringExpContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by the <c>StringExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitStringExp([NotNull] MathmpParser.StringExpContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by the <c>SquaredExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -227,6 +241,20 @@ public partial class MathmpBaseListener : IMathmpListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitBracedExp([NotNull] MathmpParser.BracedExpContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by the <c>SingleQuoteStrExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSingleQuoteStrExp([NotNull] MathmpParser.SingleQuoteStrExpContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by the <c>SingleQuoteStrExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSingleQuoteStrExp([NotNull] MathmpParser.SingleQuoteStrExpContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by the <c>NumberExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.

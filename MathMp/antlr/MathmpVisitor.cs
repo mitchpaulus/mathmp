@@ -65,6 +65,13 @@ public interface IMathmpVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitOperatorExp([NotNull] MathmpParser.OperatorExpContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>StringExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitStringExp([NotNull] MathmpParser.StringExpContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>SquaredExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// </summary>
@@ -127,6 +134,13 @@ public interface IMathmpVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitBracedExp([NotNull] MathmpParser.BracedExpContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>SingleQuoteStrExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSingleQuoteStrExp([NotNull] MathmpParser.SingleQuoteStrExpContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>NumberExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.

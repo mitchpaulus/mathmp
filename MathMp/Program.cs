@@ -1,4 +1,5 @@
-﻿using Antlr4.Runtime;
+﻿using System.Text;
+using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 
 namespace MathMp;
@@ -13,9 +14,13 @@ class Program
 
         MathMlStyle style = MathMlStyle.Web;
 
+        bool replaceCompile = false;
+
         while (i < args.Length)
         {
             var arg = args[i];
+            i++;
+
             if (arg == "--help")
             {
                 PrintHelp();
@@ -28,6 +33,15 @@ class Program
             {
                 style = MathMlStyle.Tex;
             }
+            else if (arg == "compile")
+            {
+                replaceCompile = true;
+                if (i < args.Length)
+                {
+                    filepath = args[i];
+                    i++;
+                }
+            }
             else
             {
                 filepath = arg;
@@ -38,7 +52,6 @@ class Program
                 }
             }
 
-            i++;
         }
 
         if (filepath == null && !Console.IsInputRedirected)
@@ -47,50 +60,77 @@ class Program
             return 0;
         }
 
-        var stream = Console.IsInputRedirected ? new AntlrInputStream(Console.In) : new AntlrFileStream(filepath);
 
-        ErrorListener errorListener = new();
-
-        MathmpLexer lex = new MathmpLexer(stream);
-        lex.RemoveErrorListeners();
-        lex.AddErrorListener(errorListener);
-
-        CommonTokenStream tokenStream = new CommonTokenStream(lex);
-        MathmpParser parser = new MathmpParser(tokenStream);
-        parser.RemoveErrorListeners();
-        parser.AddErrorListener(errorListener);
-
-        var tree = parser.file();
-
-        if (errorListener.Messages.Any())
+        if (replaceCompile)
         {
-            foreach (var errorMessage in errorListener.Messages)
+            string allContent = filepath is null ? Console.In.ReadToEnd() : File.ReadAllText(filepath!);
+
+            Replacer r = new Replacer(allContent, MathMlStyle.Tex);
+            var (success, output) = r.Replace();
+            if (!success)
             {
-                Console.Error.Write(errorMessage);
-                if (!errorMessage.EndsWith('\n')) Console.Error.Write('\n');
+                Console.Error.Write("Error compiling math formulas.\n");
+                foreach (var e in r.ErrorListener.Messages)
+                {
+                    Console.Error.Write(e);
+                    if (!e.EndsWith('\n')) Console.Error.Write('\n');
+                }
+
+                return 1;
             }
 
-            return 1;
-        }
-
-        MathmpBaseVisitor<string> visitor;
-        if (style == MathMlStyle.Tex)
-        {
-            visitor = new TexVisitor();
+            Console.Write(output);
         }
         else
         {
-            visitor = new MathMpVisitor(style);
+
+            var stream = Console.IsInputRedirected ? new AntlrInputStream(Console.In) : new AntlrFileStream(filepath);
+
+            ErrorListener errorListener = new();
+
+            MathmpLexer lex = new MathmpLexer(stream);
+            lex.RemoveErrorListeners();
+            lex.AddErrorListener(errorListener);
+
+            CommonTokenStream tokenStream = new CommonTokenStream(lex);
+            MathmpParser parser = new MathmpParser(tokenStream);
+            parser.RemoveErrorListeners();
+            parser.AddErrorListener(errorListener);
+
+            var tree = parser.file();
+
+            if (errorListener.Messages.Any())
+            {
+                foreach (var errorMessage in errorListener.Messages)
+                {
+                    Console.Error.Write(errorMessage);
+                    if (!errorMessage.EndsWith('\n')) Console.Error.Write('\n');
+                }
+
+                return 1;
+            }
+
+            MathmpBaseVisitor<string> visitor;
+            if (style == MathMlStyle.Tex)
+            {
+                visitor = new TexVisitor();
+            }
+            else
+            {
+                visitor = new MathMpVisitor(style);
+            }
+
+            // MathMpVisitor visitor = new MathMpVisitor(style);
+
+            foreach (var mathLine in tree.math())
+            {
+                string output = visitor.Visit(mathLine);
+                Console.Write(output);
+                Console.Write('\n');
+            }
         }
 
-        // MathMpVisitor visitor = new MathMpVisitor(style);
 
-        foreach (var mathLine in tree.math())
-        {
-            string output = visitor.Visit(mathLine);
-            Console.Write(output);
-            Console.Write('\n');
-        }
 
         return 0;
     }
@@ -194,7 +234,7 @@ public class MathMpVisitor : MathmpBaseVisitor<string>
     public override string VisitGreekExp(MathmpParser.GreekExpContext context)
     {
         List<string> replacements = context.greek().GREEK().Select(g => Greek.Map.GetValueOrDefault(g.GetText(), "Not Implemented")).ToList();
-        return $"<mo>{string.Join("", replacements)}</mo>";
+        return $"<mi>{string.Join("", replacements)}</mi>";
     }
 
     public override string VisitSqrtExp(MathmpParser.SqrtExpContext context)
@@ -210,6 +250,16 @@ public class MathMpVisitor : MathmpBaseVisitor<string>
     public override string VisitAbbrevExp(MathmpParser.AbbrevExpContext context)
     {
         return $"<mo>{Abbrevs.Map[context.GetText()]}</mo>";
+    }
+
+    public override string VisitStringExp(MathmpParser.StringExpContext context)
+    {
+        return $"<mi mathvariant=\"normal\">{context.Contents()}</mi>";
+    }
+
+    public override string VisitSingleQuoteStrExp(MathmpParser.SingleQuoteStrExpContext context)
+    {
+        return $"<mi mathvariant=\"normal\">{context.GetText()[1..]}</mi>";
     }
 }
 
@@ -265,5 +315,130 @@ public class ErrorListener : IAntlrErrorListener<IToken>, IAntlrErrorListener<in
     public void SyntaxError(TextWriter output, IRecognizer recognizer, int offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
     {
         Messages.Add(msg);
+    }
+}
+
+public static class Extensions
+{
+    public static string Contents(this MathmpParser.StringExpContext stringExpContext)
+    {
+        string text = stringExpContext.GetText();
+        StringBuilder b = new StringBuilder(text.Length - 2);
+        bool inEscape = false;
+        for (int i = 1; i < text.Length - 1; i++)
+        {
+            if (inEscape)
+            {
+                if (text[i] == '\"')
+                {
+                    b.Append('\"');
+                }
+                else
+                {
+                    b.Append('\\');
+                    b.Append(text[i]);
+                }
+            }
+            else
+            {
+                if (text[i] == '\\')
+                {
+                    inEscape = true;
+                }
+                else
+                {
+                    b.Append(text[i]);
+                }
+            }
+        }
+
+        return b.ToString();
+    }
+}
+
+public class Replacer
+{
+    private readonly string _allContent;
+    private readonly MathmpLexer _lexer;
+    private readonly CommonTokenStream _commonTokenStream;
+    private readonly MathmpParser _parser;
+    public readonly ErrorListener ErrorListener;
+    private readonly MathMpVisitor _visitor;
+
+    public Replacer(string allContent, MathMlStyle style)
+    {
+        _allContent = allContent;
+
+        _lexer = new MathmpLexer(new AntlrInputStream(""));
+        ErrorListener = new ErrorListener();
+        _lexer.RemoveErrorListeners();
+        _lexer.AddErrorListener(ErrorListener);
+        CommonTokenStream tokenStream = new CommonTokenStream(_lexer);
+        MathmpParser parser = new MathmpParser(tokenStream);
+        parser.RemoveErrorListeners();
+        parser.AddErrorListener(ErrorListener);
+        _commonTokenStream = new CommonTokenStream(_lexer);
+        _parser = new MathmpParser(_commonTokenStream);
+        _visitor = new MathMpVisitor(style);
+    }
+
+    public (bool, string) Compile(string inputText)
+    {
+        _lexer.Reset();
+        _lexer.SetInputStream(new AntlrInputStream(inputText));
+
+        _commonTokenStream.SetTokenSource(_lexer);
+        _parser.Reset();
+
+        ErrorListener.Messages.Clear();
+        var tree = _parser.math();
+
+        if (ErrorListener.Messages.Any()) return (false, "");
+
+        StringBuilder b = new StringBuilder();
+        b.Append(_visitor.Visit(tree));
+
+        return (true, b.ToString());
+    }
+
+    public (bool, string) Replace()
+    {
+        // _lexer.SetInputStream();
+        StringBuilder b = new StringBuilder(_allContent.Length * 2);
+        bool inFormula = false;
+
+        StringBuilder currentFormula = new StringBuilder(200);
+        foreach (var c in _allContent)
+        {
+            if (inFormula)
+            {
+                if (c == '`')
+                {
+                    inFormula = false;
+                    // Compute formula for replacement.
+                    (var success, string replacement) = Compile(currentFormula.ToString());
+                    if (!success) return (false, "");
+                    b.Append(replacement);
+                    currentFormula.Clear();
+                }
+                else
+                {
+                    currentFormula.Append(c);
+                }
+            }
+            else
+            {
+                if (c == '`')
+                {
+                    inFormula = true;
+                }
+                else
+                {
+                    b.Append(c);
+                }
+            }
+        }
+
+        return (true, b.ToString());
     }
 }
