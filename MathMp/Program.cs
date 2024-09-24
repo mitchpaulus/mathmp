@@ -205,7 +205,14 @@ public class MathMpVisitor : MathmpBaseVisitor<string>
 
     public override string VisitDotExp(MathmpParser.DotExpContext context) => $"<mover accent=\"true\">{Visit(context.expression())}<mo>.</mo></mover>";
 
-    public override string VisitIdentifierExp(MathmpParser.IdentifierExpContext context) => $"<mi>{context.GetText()}</mi>";
+    public override string VisitIdentifierExp(MathmpParser.IdentifierExpContext context)
+    {
+        StringBuilder b = new(context.GetText().Length * 10 + 14);
+        b.Append("<mrow>");
+        foreach (var c in context.GetText()) b.Append($"<mi>{c}</mi>");
+        b.Append("</mrow>");
+        return b.ToString();
+    }
 
     public override string VisitDivExp(MathmpParser.DivExpContext context)
     {
