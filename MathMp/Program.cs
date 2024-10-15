@@ -160,6 +160,7 @@ public class Greek
         { "delta", "δ" },
         { "Delta", "Δ" },
         { "rho", "ρ"},
+        { "nu", "ν"}
     };
 }
 
