@@ -37,6 +37,7 @@ GREEK : 'del'
       | 'Delta'
       | 'rho'
       | 'nu'
+      | 'eta'
       ;
 
 APPROX : 'approx' ;

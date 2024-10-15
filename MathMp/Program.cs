@@ -160,7 +160,8 @@ public class Greek
         { "delta", "δ" },
         { "Delta", "Δ" },
         { "rho", "ρ"},
-        { "nu", "ν"}
+        { "nu", "ν"},
+        { "eta", "η"},
     };
 }
 
@@ -191,7 +192,9 @@ public class MathMpVisitor : MathmpBaseVisitor<string>
     {
         var contents = context.expression().Select(Visit);
         var joined = string.Join("", contents);
-        return $"<math xmlns=\"http://www.w3.org/1998/Math/MathML\">{joined}</math>";
+        return _style == MathMlStyle.Word
+            ? $"<math xmlns=\"http://www.w3.org/1998/Math/MathML\">{joined}</math>"
+            : $"<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mstyle displaystyle=\"true\">{joined}</mstyle></math>";
     }
 
     public override string VisitSubscriptExp(MathmpParser.SubscriptExpContext context)
@@ -204,7 +207,12 @@ public class MathMpVisitor : MathmpBaseVisitor<string>
         return $"<msup>{Visit(context.expression(0))}{Visit(context.expression(1))}</msup>";
     }
 
-    public override string VisitDotExp(MathmpParser.DotExpContext context) => $"<mover accent=\"true\">{Visit(context.expression())}<mo>.</mo></mover>";
+    public override string VisitDotExp(MathmpParser.DotExpContext context)
+    {
+        return _style == MathMlStyle.Word
+           ? $"<mover accent=\"true\">{Visit(context.expression())}<mo>.</mo></mover>"
+           : $"<mover>{Visit(context.expression())}<mo>.</mo></mover>";
+    }
 
     public override string VisitIdentifierExp(MathmpParser.IdentifierExpContext context)
     {
@@ -227,14 +235,14 @@ public class MathMpVisitor : MathmpBaseVisitor<string>
     {
         return _style == MathMlStyle.Word
             ? $"<mfenced><mrow>{string.Join("", context.expression().Select(Visit))}</mrow></mfenced>"
-            : $"<mo>(</mo>{string.Join("", context.expression().Select(Visit))}<mo>)</mo>";
+            : $"<mrow><mo>(</mo>{string.Join("", context.expression().Select(Visit))}<mo>)</mo></mrow>";
     }
 
     public override string VisitSquareExp(MathmpParser.SquareExpContext context)
     {
         return _style == MathMlStyle.Word
             ? $"<mfenced open=\"[\" close=\"]\"><mrow>{string.Join("", context.expression().Select(Visit))}</mrow></mfenced>"
-            : $"<mo>[</mo>{string.Join("", context.expression().Select(Visit))}<mo>]</mo>";
+            : $"<mrow><mo>[</mo>{string.Join("", context.expression().Select(Visit))}<mo>]</mo></mrow>";
     }
 
     public override string VisitNumberExp(MathmpParser.NumberExpContext context) => $"<mn>{context.GetText()}</mn>";
