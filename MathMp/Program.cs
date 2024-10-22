@@ -45,7 +45,7 @@ class Program
             else
             {
                 filepath = arg;
-                if (i != args.Length - 1)
+                if (i != args.Length)
                 {
                     Console.Error.Write("More than one filepath was provided.\n");
                     return 1;
@@ -138,6 +138,7 @@ class Program
     public static void PrintHelp()
     {
          Console.Write("mathmp [--word|--tex] FILEPATH\n");
+         Console.Write("mathmp [--word|--tex] compile FILEPATH\n");
          Console.Write("\n");
          Console.Write("OPTIONS\n");
          Console.Write(" --word  Print to MathML that MS Word understands\n");
