@@ -38,6 +38,7 @@ GREEK : 'del'
       | 'rho'
       | 'nu'
       | 'eta'
+      | 'omega'
       ;
 
 APPROX : 'approx' ;
@@ -54,7 +55,7 @@ LSQUARE : '[' ;
 RSQUARE : ']' ;
 LBRACE : '{' ;
 RBRACE : '}' ;
-OPERATOR : '+' | '-' | '=' | '∂' | 'Δ' | '°' | ',' | '≈' ;
+OPERATOR : '+' | '-' | '=' | '∂' | 'Δ' | '°' | ',' | '≈' | '⋅' ;
 FORWARDSLASH : '/' ;
 
 // See pg. 78 of Definitive ANTLR Reference.
@@ -72,3 +73,5 @@ PERIOD : '.' ;
 
 NUMBER : [0-9]+('.' [0-9]+)? ;
 WS : [ \t\r\n]+ -> skip ;
+
+COMMENT : '//' ~[\r\n]* -> skip ;

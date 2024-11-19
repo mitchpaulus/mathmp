@@ -39,7 +39,7 @@ public partial class MathmpParser : Parser {
 		T__0=1, GREEK=2, APPROX=3, CDOT=4, SQUARED=5, CARET=6, LPAREN=7, RPAREN=8, 
 		LSQUARE=9, RSQUARE=10, LBRACE=11, RBRACE=12, OPERATOR=13, FORWARDSLASH=14, 
 		STRING=15, SINGLE_QUOTE_STR=16, DOT=17, SQRT=18, IDENTIFIER=19, PERIOD=20, 
-		NUMBER=21, WS=22;
+		NUMBER=21, WS=22, COMMENT=23;
 	public const int
 		RULE_file = 0, RULE_math = 1, RULE_expression = 2, RULE_operator = 3, 
 		RULE_identifier = 4, RULE_number = 5, RULE_greek = 6, RULE_abbrev = 7;
@@ -57,7 +57,7 @@ public partial class MathmpParser : Parser {
 		null, null, "GREEK", "APPROX", "CDOT", "SQUARED", "CARET", "LPAREN", "RPAREN", 
 		"LSQUARE", "RSQUARE", "LBRACE", "RBRACE", "OPERATOR", "FORWARDSLASH", 
 		"STRING", "SINGLE_QUOTE_STR", "DOT", "SQRT", "IDENTIFIER", "PERIOD", "NUMBER", 
-		"WS"
+		"WS", "COMMENT"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -1202,7 +1202,7 @@ public partial class MathmpParser : Parser {
 	}
 
 	private static int[] _serializedATN = {
-		4,1,22,104,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		4,1,23,104,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
 		7,7,1,0,1,0,4,0,19,8,0,11,0,12,0,20,5,0,23,8,0,10,0,12,0,26,9,0,1,1,5,
 		1,29,8,1,10,1,12,1,32,9,1,1,2,1,2,1,2,5,2,37,8,2,10,2,12,2,40,9,2,1,2,
 		1,2,1,2,5,2,45,8,2,10,2,12,2,48,9,2,1,2,1,2,1,2,5,2,53,8,2,10,2,12,2,56,

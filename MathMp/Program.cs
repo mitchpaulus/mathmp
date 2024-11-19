@@ -163,6 +163,7 @@ public class Greek
         { "rho", "ρ"},
         { "nu", "ν"},
         { "eta", "η"},
+        { "omega", "ω"},
     };
 }
 
