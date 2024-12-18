@@ -1,5 +1,5 @@
 using Antlr4.Runtime;
-using MathMp;
+using MathMpLib;
 
 namespace Tests;
 

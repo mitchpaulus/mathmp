@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathMp", "MathMp\MathMp.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{233EE706-AA22-4FE2-A488-D4CDA8733905}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathMpVba", "MathMpVba\MathMpVba.csproj", "{5ED8FB90-12F2-463A-9007-0D89A1203A6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathMpLib", "MathMpLib\MathMpLib.csproj", "{3C806656-0D8A-4BB3-9947-63C26D4D797A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{233EE706-AA22-4FE2-A488-D4CDA8733905}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{233EE706-AA22-4FE2-A488-D4CDA8733905}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{233EE706-AA22-4FE2-A488-D4CDA8733905}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ED8FB90-12F2-463A-9007-0D89A1203A6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ED8FB90-12F2-463A-9007-0D89A1203A6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ED8FB90-12F2-463A-9007-0D89A1203A6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ED8FB90-12F2-463A-9007-0D89A1203A6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C806656-0D8A-4BB3-9947-63C26D4D797A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C806656-0D8A-4BB3-9947-63C26D4D797A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C806656-0D8A-4BB3-9947-63C26D4D797A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C806656-0D8A-4BB3-9947-63C26D4D797A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

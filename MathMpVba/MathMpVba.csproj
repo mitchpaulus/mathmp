@@ -3,14 +3,15 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net9.0</TargetFramework>
+        <LangVersion>latestmajor</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <PublishAot>true</PublishAot>
+        <InvariantGlobalization>true</InvariantGlobalization>
     </PropertyGroup>
 
-
     <ItemGroup>
-        <ProjectReference Include="..\MathMpLib\MathMpLib.csproj" />
+      <ProjectReference Include="..\MathMpLib\MathMpLib.csproj" />
     </ItemGroup>
-
 
 </Project>
