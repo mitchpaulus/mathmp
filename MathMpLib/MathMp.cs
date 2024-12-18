@@ -14,13 +14,13 @@ public class Greek
 {
     public static Dictionary<string, string> Map = new()
     {
-        { "del", "\u2202" },
-        { "delta", "δ" },
-        { "Delta", "Δ" },
-        { "rho", "ρ"},
-        { "nu", "ν"},
-        { "eta", "η"},
-        { "omega", "ω"},
+        { "del", "&#x2202;" },
+        { "delta", "&#x03B4;" },
+        { "Delta", "&#x0394;" },
+        { "rho", "&#x03C1;"},
+        { "nu", "&#x03BD;"},
+        { "eta", "&#x03B7;"},
+        { "omega", "&#x03C9;"},
     };
 }
 
@@ -28,8 +28,8 @@ public class Abbrevs
 {
     public static Dictionary<string, string> Map = new()
     {
-        { "approx", "\u2248" },
-        { "cdot", "\u00B7" },
+        { "approx", "&#x2248;" },
+        { "cdot", "&#x22C5;" },
     };
 }
 

@@ -1,6 +1,6 @@
 grammar Mathmp ;
 
-file : (math '\n'+)* ;
+file : ('\r'? '\n')* (math ('\r'? '\n')+)* ;
 
 math : expression* ;
 
@@ -72,6 +72,6 @@ IDENTIFIER : [a-zA-Z]+ ;
 PERIOD : '.' ;
 
 NUMBER : [0-9]+('.' [0-9]+)? ;
-WS : [ \t\r\n]+ -> skip ;
+WS : [ \t]+ -> skip ;
 
 COMMENT : '//' ~[\r\n]* -> skip ;
