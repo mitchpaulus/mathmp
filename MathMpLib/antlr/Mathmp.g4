@@ -8,7 +8,7 @@ expression
     : LBRACE expression* RBRACE # BracedExp
     | LPAREN expression* RPAREN # ParenExp
     | LSQUARE expression* RSQUARE # SquareExp
-    | DOT expression # DotExp
+    | OpType=(DOT|HAT|BAR) expression # DotExp
     | expression SQUARED # SquaredExp
     | expression PERIOD expression # SubscriptExp
     | expression CARET expression # SuperscriptExp
@@ -39,6 +39,7 @@ GREEK : 'del'
       | 'nu'
       | 'eta'
       | 'omega'
+      | 'Sigma'
       ;
 
 APPROX : 'approx' ;
@@ -65,6 +66,8 @@ fragment ESC : '\\"'  | '\\\\' ;
 SINGLE_QUOTE_STR : '\'' [a-zA-Z] + ;
 
 DOT : 'dot' ;
+HAT : 'hat' ;
+BAR : 'bar' ;
 SQRT : 'sqrt' ;
 
 IDENTIFIER : [a-zA-Z]+ ;

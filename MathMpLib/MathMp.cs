@@ -21,6 +21,7 @@ public class Greek
         { "nu", "&#x03BD;"},
         { "eta", "&#x03B7;"},
         { "omega", "&#x03C9;"},
+        { "Sigma", "&#x03A3;"},
     };
 }
 
@@ -68,9 +69,29 @@ public class MathMpVisitor : MathmpBaseVisitor<string>
 
     public override string VisitDotExp(MathmpParser.DotExpContext context)
     {
+        string opTypeText = context.OpType.Text;
+
+        string charText;
+        if (opTypeText == "dot")
+        {
+            charText = ".";
+        }
+        else if (opTypeText == "hat")
+        {
+            charText = "^";
+        }
+        else if (opTypeText == "bar")
+        {
+            charText = "&#xAF;";
+        }
+        else
+        {
+            throw new Exception("We don't handle the op type {opTypeText} yet.");
+        }
+
         return _style == MathMlStyle.Word
-           ? $"<mover accent=\"true\">{Visit(context.expression())}<mo>.</mo></mover>"
-           : $"<mover>{Visit(context.expression())}<mo>.</mo></mover>";
+           ? $"<mover accent=\"true\">{Visit(context.expression())}<mo>{charText}</mo></mover>"
+           : $"<mover>{Visit(context.expression())}<mo>{charText}</mo></mover>";
     }
 
     public override string VisitIdentifierExp(MathmpParser.IdentifierExpContext context)
