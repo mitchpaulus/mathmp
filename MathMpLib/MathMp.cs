@@ -193,7 +193,7 @@ public class TexVisitor : MathmpBaseVisitor<string>
 
     public override string VisitParenExp(MathmpParser.ParenExpContext context)
     {
-        return $"\\left({context.expression().Select(Visit)}\\right)";
+        return $"\\left({string.Join("", context.expression().Select(Visit))}\\right)";
     }
 
     public override string VisitNumberExp(MathmpParser.NumberExpContext context) => context.GetText();
@@ -259,7 +259,7 @@ public class Replacer
     private readonly CommonTokenStream _commonTokenStream;
     private readonly MathmpParser _parser;
     public readonly ErrorListener ErrorListener;
-    private readonly MathMpVisitor _visitor;
+    private readonly MathmpBaseVisitor<string> _visitor;
 
     public Replacer(string allContent, MathMlStyle style)
     {
@@ -275,7 +275,14 @@ public class Replacer
         parser.AddErrorListener(ErrorListener);
         _commonTokenStream = new CommonTokenStream(_lexer);
         _parser = new MathmpParser(_commonTokenStream);
-        _visitor = new MathMpVisitor(style);
+        if (style == MathMlStyle.Tex)
+        {
+            _visitor = new TexVisitor();
+        }
+        else
+        {
+            _visitor = new MathMpVisitor(style);
+        }
     }
 
     public (bool, string) Compile(string inputText)
