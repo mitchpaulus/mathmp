@@ -14,6 +14,7 @@ expression
     | expression CARET expression # SuperscriptExp
     | expression FORWARDSLASH expression # DivExp
     | SQRT expression # SqrtExp
+    | SUM LBRACE expression RBRACE LBRACE expression RBRACE # SumExp
     | operator # OperatorExp
     | abbrev # AbbrevExp
     | SINGLE_QUOTE_STR # SingleQuoteStrExp
@@ -28,6 +29,8 @@ identifier : IDENTIFIER ;
 number : NUMBER ;
 
 greek : GREEK+ ;
+
+SUM : 'sum' ;
 
 GREEK : 'del'
       | 'alpha'
@@ -63,6 +66,7 @@ FORWARDSLASH : '/' ;
 STRING : '"' (ESC|.)*? '"' ;
 fragment ESC : '\\"'  | '\\\\' ;
 
+// For very simple text
 SINGLE_QUOTE_STR : '\'' [a-zA-Z] + ;
 
 DOT : 'dot' ;

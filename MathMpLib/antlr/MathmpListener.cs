@@ -195,6 +195,18 @@ public interface IMathmpListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitParenExp([NotNull] MathmpParser.ParenExpContext context);
 	/// <summary>
+	/// Enter a parse tree produced by the <c>SumExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSumExp([NotNull] MathmpParser.SumExpContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>SumExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSumExp([NotNull] MathmpParser.SumExpContext context);
+	/// <summary>
 	/// Enter a parse tree produced by the <c>BracedExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// </summary>

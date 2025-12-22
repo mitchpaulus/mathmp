@@ -128,6 +128,13 @@ public interface IMathmpVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitParenExp([NotNull] MathmpParser.ParenExpContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>SumExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSumExp([NotNull] MathmpParser.SumExpContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>BracedExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// </summary>

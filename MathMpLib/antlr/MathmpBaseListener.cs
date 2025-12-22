@@ -228,6 +228,20 @@ public partial class MathmpBaseListener : IMathmpListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitParenExp([NotNull] MathmpParser.ParenExpContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by the <c>SumExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSumExp([NotNull] MathmpParser.SumExpContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by the <c>SumExp</c>
+	/// labeled alternative in <see cref="MathmpParser.expression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSumExp([NotNull] MathmpParser.SumExpContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by the <c>BracedExp</c>
 	/// labeled alternative in <see cref="MathmpParser.expression"/>.
 	/// <para>The default implementation does nothing.</para>

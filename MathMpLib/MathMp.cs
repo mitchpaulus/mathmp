@@ -130,8 +130,19 @@ public class MathMpVisitor : MathmpBaseVisitor<string>
 
     public override string VisitGreekExp(MathmpParser.GreekExpContext context)
     {
-        List<string> replacements = context.greek().GREEK().Select(g => Greek.Map.GetValueOrDefault(g.GetText(), "Not Implemented")).ToList();
-        return $"<mi>{string.Join("", replacements)}</mi>";
+        // List<string> replacements = context.greek().GREEK().Select(g => Greek.Map.GetValueOrDefault(g.GetText(), "Not Implemented")).ToList();
+        var replacement = Greek.Map.GetValueOrDefault(context.greek().GetText(), "Not Implemented");
+
+        // Capital Sigma is usually for sums, to get them bigger, use '<mo>'
+        if (context.greek().GetText() == "Sigma")
+        {
+            return $"<mrow><mo stretchy=\"false\">{replacement}</mo></mrow>";
+        }
+        else
+        {
+            return $"<mi>{replacement}</mi>";
+        }
+
     }
 
     public override string VisitSqrtExp(MathmpParser.SqrtExpContext context)
