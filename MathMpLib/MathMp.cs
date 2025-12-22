@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Antlr4.Runtime;
+using Antlr4.Runtime.Tree;
 
 namespace MathMpLib;
 
@@ -199,6 +200,30 @@ public class TexVisitor : MathmpBaseVisitor<string>
     public override string VisitNumberExp(MathmpParser.NumberExpContext context) => context.GetText();
 }
 
+public class OMathVisitor : MathmpBaseVisitor<string>
+{
+    public override string VisitMath(MathmpParser.MathContext context)
+    {
+        var inner = Visit(context);
+        var elements = inner.XmlSurround("m:oMath").XmlSurround("m:oMathPara");
+
+        return $"<?xml version=\"1.0\" encoding=\"UTF-8\"?>{elements}";
+    }
+
+    public override string VisitIdentifierExp(MathmpParser.IdentifierExpContext context)
+    {
+        return $"<m:r><m:t>{context.GetText()}</m:t></m:r>";
+    }
+
+    public override string VisitSuperscriptExp(MathmpParser.SuperscriptExpContext context)
+    {
+        var baseContent = Visit(context.expression(0));
+        var exponentContent = Visit(context.expression(1));
+
+        return $"{baseContent.XmlSurround("m:e")}{exponentContent.XmlSurround("m:sup")}".XmlSurround("m:sSup");
+    }
+}
+
 public class ErrorListener : IAntlrErrorListener<IToken>, IAntlrErrorListener<int>
 {
     public readonly List<string>  Messages = new();
@@ -249,6 +274,11 @@ public static class Extensions
         }
 
         return b.ToString();
+    }
+
+    public static string XmlSurround(this string content, string elementType)
+    {
+        return $"<{elementType}>{content}</{elementType}>";
     }
 }
 
