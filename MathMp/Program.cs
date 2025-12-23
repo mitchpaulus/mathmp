@@ -23,7 +23,7 @@ class Program
             var arg = args[i];
             i++;
 
-            if (arg == "--help")
+            if (arg == "--help" || arg == "-h")
             {
                 PrintHelp();
                 return 0;
@@ -35,6 +35,10 @@ class Program
             else if (arg == "--tex")
             {
                 style = MathMlStyle.Tex;
+            }
+            else if (arg == "--omath")
+            {
+                style = MathMlStyle.OMath;
             }
             else if (arg == "compile")
             {
@@ -119,7 +123,7 @@ class Program
         {
             string allContent = filepath is null ? Console.In.ReadToEnd() : File.ReadAllText(filepath!);
 
-            Replacer r = new Replacer(allContent, MathMlStyle.Tex);
+            Replacer r = new Replacer(allContent, style);
             var (success, output) = r.Replace();
             if (!success)
             {
@@ -165,7 +169,11 @@ class Program
             }
 
             MathmpBaseVisitor<string> visitor;
-            if (style == MathMlStyle.Tex)
+            if (style == MathMlStyle.OMath)
+            {
+                visitor = new OMathVisitor();
+            }
+            else if (style == MathMlStyle.Tex)
             {
                 visitor = new TexVisitor();
             }
@@ -191,11 +199,12 @@ class Program
 
     public static void PrintHelp()
     {
-         Console.Write("mathmp [--word|--tex] FILEPATH\n");
-         Console.Write("mathmp [--word|--tex] compile FILEPATH\n");
+         Console.Write("mathmp [--word|--tex|--omath] FILEPATH\n");
+         Console.Write("mathmp [--word|--tex|--omath] compile FILEPATH\n");
          Console.Write("\n");
          Console.Write("OPTIONS\n");
          Console.Write(" --word  Print to MathML that MS Word understands\n");
          Console.Write(" --tex   Print to Tex format\n");
+         Console.Write(" --omath Print to Office Math (OMML) XML\n");
     }
 }

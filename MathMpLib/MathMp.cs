@@ -9,6 +9,7 @@ public enum MathMlStyle
     Word,
     Web,
     Tex,
+    OMath,
 }
 
 public class Greek
@@ -215,8 +216,8 @@ public class OMathVisitor : MathmpBaseVisitor<string>
 {
     public override string VisitMath(MathmpParser.MathContext context)
     {
-        var inner = Visit(context);
-        var elements = inner.XmlSurround("m:oMath").XmlSurround("m:oMathPara");
+        var inner = string.Join("", context.expression().Select(Visit));
+        var elements = inner.XmlSurround("m:oMath").XmlSurround("m:oMathPara").XmlSurround("w:p");
 
         return $"<?xml version=\"1.0\" encoding=\"UTF-8\"?>{elements}";
     }
@@ -319,6 +320,10 @@ public class Replacer
         if (style == MathMlStyle.Tex)
         {
             _visitor = new TexVisitor();
+        }
+        else if (style == MathMlStyle.OMath)
+        {
+            _visitor = new OMathVisitor();
         }
         else
         {
