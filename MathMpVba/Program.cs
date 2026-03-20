@@ -38,9 +38,8 @@ class Program
             return 1;
         }
 
-        MathmpBaseVisitor<string> visitor = new MathMpVisitor(MathMlStyle.Word);
+        MathmpBaseVisitor<string> visitor = new MathMpRtfVisitor();
 
-        // MathMpVisitor visitor = new MathMpVisitor(style);
         StringBuilder outBuilder = new StringBuilder();
         foreach (var mathLine in tree.math())
         {
@@ -48,7 +47,7 @@ class Program
             outBuilder.Append(output);
             outBuilder.Append('\n');
         }
-        File.WriteAllText(mathMpDir + "\\output.txt", outBuilder.ToString());
+        File.WriteAllText(mathMpDir + "\\output.rtf", outBuilder.ToString(), windowsCodePageEncoding);
 
         return 0;
 
