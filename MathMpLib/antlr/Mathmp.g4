@@ -63,8 +63,10 @@ OPERATOR : '+' | '-' | '=' | '∂' | 'Δ' | '°' | ',' | '≈' | '⋅' ;
 FORWARDSLASH : '/' ;
 
 // See pg. 78 of Definitive ANTLR Reference.
-STRING : '"' (ESC|.)*? '"' ;
+
+STRING : DBQUOTE (ESC|.)*? DBQUOTE ;
 fragment ESC : '\\"'  | '\\\\' ;
+fragment DBQUOTE : '"' | '\u201C' | '\u201D' ;
 
 // For very simple text
 SINGLE_QUOTE_STR : '\'' [a-zA-Z] + ;
