@@ -9,9 +9,11 @@ class Program
     static int Main(string[] args)
     {
         string inputFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.Create) + "\\MathMp\\input.mp";
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        Encoding windowsCodePageEncoding = Encoding.GetEncoding(0);
 
         ErrorListener errorListener = new();
-        AntlrFileStream stream = new AntlrFileStream(inputFile);
+        AntlrFileStream stream = new AntlrFileStream(inputFile, windowsCodePageEncoding);
         MathmpLexer lex = new MathmpLexer(stream);
         lex.RemoveErrorListeners();
         lex.AddErrorListener(errorListener);
