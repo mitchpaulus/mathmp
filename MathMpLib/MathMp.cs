@@ -10,6 +10,7 @@ public enum MathMlStyle
     Web,
     Tex,
     OMath,
+    RTF,
 }
 
 public class Greek
@@ -324,6 +325,10 @@ public class Replacer
         else if (style == MathMlStyle.OMath)
         {
             _visitor = new OMathVisitor();
+        }
+        else if (style == MathMlStyle.RTF)
+        {
+            _visitor = new MathMpRtfVisitor();
         }
         else
         {

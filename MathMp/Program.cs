@@ -40,6 +40,10 @@ class Program
             {
                 style = MathMlStyle.OMath;
             }
+            else if (arg == "--rtf")
+            {
+                style = MathMlStyle.RTF;
+            }
             else if (arg == "compile")
             {
                 replaceCompile = true;
@@ -177,6 +181,10 @@ class Program
             {
                 visitor = new TexVisitor();
             }
+            else if (style == MathMlStyle.RTF)
+            {
+                visitor = new MathMpRtfVisitor();
+            }
             else
             {
                 visitor = new MathMpVisitor(style);
@@ -199,12 +207,13 @@ class Program
 
     public static void PrintHelp()
     {
-         Console.Write("mathmp [--word|--tex|--omath] FILEPATH\n");
-         Console.Write("mathmp [--word|--tex|--omath] compile FILEPATH\n");
+         Console.Write("mathmp [--word|--tex|--omath|--rtf] FILEPATH\n");
+         Console.Write("mathmp [--word|--tex|--omath|--rtf] compile FILEPATH\n");
          Console.Write("\n");
          Console.Write("OPTIONS\n");
          Console.Write(" --word  Print to MathML that MS Word understands\n");
          Console.Write(" --tex   Print to Tex format\n");
          Console.Write(" --omath Print to Office Math (OMML) XML\n");
+         Console.Write(" --rtf   Print to RTF math format\n");
     }
 }
