@@ -69,7 +69,7 @@ fragment ESC : '\\"'  | '\\\\' ;
 fragment DBQUOTE : '"' | '\u201C' | '\u201D' ;
 
 // For very simple text
-SINGLE_QUOTE_STR : '\'' [a-zA-Z] + ;
+SINGLE_QUOTE_STR : ('\'' | '\u2018') [a-zA-Z] + ;
 
 DOT : 'dot' ;
 HAT : 'hat' ;
