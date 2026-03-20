@@ -25,14 +25,19 @@ public class MathMpRtfVisitor : MathmpBaseVisitor<string>
 
     private static string Uni(int codePoint) => $"\\u{codePoint}?";
 
-    private static string Run(string text) => $"{{\\mr {text}}}";
+    // Italic math run (for variables/identifiers) - matches Word's format
+    private static string Run(string text) => $"{{\\i {{\\mr\\mscr0\\msty2 {text}}}}}";
 
-    private static string NormalRun(string text) => $"{{\\mr {{\\mrPr{{\\mnor}}}}{text}}}";
+    // Normal/upright math run (for numbers, operators, text)
+    private static string NormalRun(string text) => $"{{{{\\mr\\mscr0\\msty0 {text}}}}}";
+
+    // Control properties for structure elements (fractions, sub/superscripts, etc.)
+    private const string CtrlPr = "{\\mctrlPr\\i }";
 
     public override string VisitMath(MathmpParser.MathContext context)
     {
         var inner = string.Join("", context.expression().Select(Visit));
-        return $"{{\\moMathPara{{\\moMath {inner}}}}}";
+        return $"{{\\mmath{{\\*\\moMathPara {{\\*\\moMath {inner}}}}}}}";
     }
 
     public override string VisitIdentifierExp(MathmpParser.IdentifierExpContext context)
@@ -51,33 +56,33 @@ public class MathMpRtfVisitor : MathmpBaseVisitor<string>
     {
         var num = Visit(context.expression(0));
         var den = Visit(context.expression(1));
-        return $"{{\\mf{{\\mnum {num}}}{{\\mden {den}}}}}";
+        return $"{{\\mf{{\\mfPr{CtrlPr}}}{{\\mnum {num}}}{{\\mden {den}}}}}";
     }
 
     public override string VisitSuperscriptExp(MathmpParser.SuperscriptExpContext context)
     {
         var baseExpr = Visit(context.expression(0));
         var supExpr = Visit(context.expression(1));
-        return $"{{\\msSup{{\\me {baseExpr}}}{{\\msup {supExpr}}}}}";
+        return $"{{\\msSup{{\\msSupPr{CtrlPr}}}{{\\me {baseExpr}}}{{\\msup {supExpr}}}}}";
     }
 
     public override string VisitSubscriptExp(MathmpParser.SubscriptExpContext context)
     {
         var baseExpr = Visit(context.expression(0));
         var subExpr = Visit(context.expression(1));
-        return $"{{\\msSub{{\\me {baseExpr}}}{{\\msub {subExpr}}}}}";
+        return $"{{\\msSub{{\\msSubPr{CtrlPr}}}{{\\me {baseExpr}}}{{\\msub {subExpr}}}}}";
     }
 
     public override string VisitSquaredExp(MathmpParser.SquaredExpContext context)
     {
         var baseExpr = Visit(context.expression());
-        return $"{{\\msSup{{\\me {baseExpr}}}{{\\msup {NormalRun("2")}}}}}";
+        return $"{{\\msSup{{\\msSupPr{CtrlPr}}}{{\\me {baseExpr}}}{{\\msup {NormalRun("2")}}}}}";
     }
 
     public override string VisitSqrtExp(MathmpParser.SqrtExpContext context)
     {
         var expr = Visit(context.expression());
-        return $"{{\\mrad{{\\mradPr{{\\mdegHide1}}}}{{\\mdeg}}{{\\me {expr}}}}}";
+        return $"{{\\mrad{{\\mradPr{{\\mdegHide1}}{CtrlPr}}}{{\\mdeg}}{{\\me {expr}}}}}";
     }
 
     public override string VisitDotExp(MathmpParser.DotExpContext context)
@@ -92,19 +97,19 @@ public class MathMpRtfVisitor : MathmpBaseVisitor<string>
         };
 
         var expr = Visit(context.expression());
-        return $"{{\\macc{{\\maccPr{{\\mchr {Uni(charCode)}}}}}{{\\me {expr}}}}}";
+        return $"{{\\macc{{\\maccPr{{\\mchr {Uni(charCode)}}}{CtrlPr}}}{{\\me {expr}}}}}";
     }
 
     public override string VisitParenExp(MathmpParser.ParenExpContext context)
     {
         var inner = string.Join("", context.expression().Select(Visit));
-        return $"{{\\md{{\\me {inner}}}}}";
+        return $"{{\\md{{\\mdPr{CtrlPr}}}{{\\me {inner}}}}}";
     }
 
     public override string VisitSquareExp(MathmpParser.SquareExpContext context)
     {
         var inner = string.Join("", context.expression().Select(Visit));
-        return $"{{\\md{{\\mdPr{{\\mbegChr [}}{{\\mendChr ]}}}}{{\\me {inner}}}}}";
+        return $"{{\\md{{\\mdPr{{\\mbegChr [}}{{\\mendChr ]}}{CtrlPr}}}{{\\me {inner}}}}}";
     }
 
     public override string VisitBracedExp(MathmpParser.BracedExpContext context) =>
@@ -143,6 +148,6 @@ public class MathMpRtfVisitor : MathmpBaseVisitor<string>
     {
         var lower = Visit(context.expression(0));
         var upper = Visit(context.expression(1));
-        return $"{{\\mnary{{\\mnaryPr{{\\mchr {Uni(0x2211)}}}}}{{\\msub {lower}}}{{\\msup {upper}}}{{\\me}}}}";
+        return $"{{\\mnary{{\\mnaryPr{{\\mchr {Uni(0x2211)}}}{CtrlPr}}}{{\\msub {lower}}}{{\\msup {upper}}}{{\\me}}}}";
     }
 }
