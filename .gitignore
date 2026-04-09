@@ -1,4 +1,5 @@
 .idea/
+.claude/
 *.interp
 *.tokens
 *.java
